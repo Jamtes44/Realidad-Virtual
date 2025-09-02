@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+      body { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.js"></script>
+    <script>
+    const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setAnimationLoop( animate );
+document.body.appendChild( renderer.domElement );
+
+const geometry = new THREE.SphereGeometry(3, 32, 32 );
+const material = new THREE.MeshBasicMaterial( { color: 0xFFED00 } );
+const sphere = new THREE.Mesh( geometry, material );
+scene.add( sphere );
+
+const geometryM = new THREE.SphereGeometry(0.5, 32, 32 );
+const materialM = new THREE.MeshBasicMaterial( { color: 0xF7D777 } );
+const sphereM = new THREE.Mesh( geometryM, materialM );
+scene.add( sphereM );
+
+const geometryV = new THREE.SphereGeometry(1, 32, 32 );
+const materialV = new THREE.MeshBasicMaterial( { color: 0xD97441 } );
+const sphereV = new THREE.Mesh( geometryV, materialV );
+scene.add( sphereV );
+
+
+const geometryT = new THREE.SphereGeometry(1, 32, 32 );
+const materialT = new THREE.MeshBasicMaterial( { color: 0x002EFF } );
+const sphereT = new THREE.Mesh( geometryT, materialT );
+scene.add( sphereT );
+
+const geometryL = new THREE.SphereGeometry(0.1, 32, 32 );
+const materialL = new THREE.MeshBasicMaterial( { color: 0xE8E9EB } );
+const sphereL = new THREE.Mesh( geometryL, materialL );
+scene.add( sphereL );
+
+const geometryMa = new THREE.SphereGeometry(1, 32, 32 );
+const materialMa = new THREE.MeshBasicMaterial( { color: 0xFF4545 } );
+const sphereMa = new THREE.Mesh( geometryMa, materialMa );
+scene.add( sphereMa );
+
+const geometryJ = new THREE.SphereGeometry(2, 32, 32 );
+const materialJ = new THREE.MeshBasicMaterial( { color: 0x8C7B2E } );
+const sphereJ = new THREE.Mesh( geometryJ, materialJ );
+scene.add( sphereJ );
+
+const geometrySa = new THREE.SphereGeometry(2, 32, 32 );
+const materialSa = new THREE.MeshBasicMaterial( { color: 0xA69446 } );
+const sphereSa = new THREE.Mesh( geometrySa, materialSa );
+scene.add( sphereSa );
+
+const geometryU = new THREE.SphereGeometry(1, 32, 32 );
+const materialU = new THREE.MeshBasicMaterial( { color: 0x5DA2D4 } );
+const sphereU = new THREE.Mesh( geometryU, materialU );
+scene.add( sphereU );
+
+
+const geometryN = new THREE.SphereGeometry(1, 32, 32 );
+const materialN = new THREE.MeshBasicMaterial( { color: 0x2EA0F2 } );
+const sphereN = new THREE.Mesh( geometryN, materialN );
+scene.add( sphereN );
+
+camera.position.z = 70;
+
+let M = 5;
+let V = 10; 
+let t = 0;
+let R = 15;
+let R2 = 2;
+let Ma = 20;
+let J = 25;
+let Sa = 30;
+let U = 35;
+let N = 40;
+let tM = 0;
+let tV = 0;
+let tMa = 0;
+let tJ = 0;
+let tSa = 0;
+let tU = 0;
+let tN = 0;
+
+function animate() {
+    t += 0.01;
+    tM += 0.015;
+    tV += 0.016;
+    tMa += 0.012;
+    
+    sphereM.position.x = M * Math.cos(tM);
+    sphereM.position.y = M * Math.sin(tM);
+
+    sphereV.position.x = V * Math.cos(tV);
+    sphereV.position.y = V * Math.sin(tV);
+
+    sphereT.position.x = R * Math.cos(t);
+    sphereT.position.y = R * Math.sin(t);  
+
+    sphereL.position.x = sphereT.position.x + R2 * Math.cos(t*2);
+    sphereL.position.y = sphereT.position.y + R2 * Math.sin(t*2);
+
+    sphereMa.position.x = Ma * Math.cos(tMa);
+    sphereMa.position.y = Ma * Math.sin(tMa);
+
+    sphereJ.position.x = J * Math.cos(t);
+    sphereJ.position.y = J * Math.sin(t);
+
+    sphereSa.position.x = Sa * Math.cos(t);
+    sphereSa.position.y = Sa * Math.sin(t);
+
+    sphereU.position.x = U * Math.cos(t);
+    sphereU.position.y = U * Math.sin(t);
+
+    sphereN.position.x = N * Math.cos(t);
+    sphereN.position.y = N * Math.sin(t);
+ 
+
+  renderer.render( scene, camera );
+
+}
+</script>
+  </body>
+</html>
