@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>My first three.js app</title>
+    <style>
+      body { margin: 0; }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.js"></script>
+    <script>
+    const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setAnimationLoop( animate );
+document.body.appendChild( renderer.domElement );
+
+const geometry = new THREE.BoxGeometry(10, 0.1, 15 );
+const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+const cube = new THREE.Mesh( geometry, material );
+scene.add( cube );
+
+const geometryS = new THREE.SphereGeometry(1, 32, 16 );
+const materialS = new THREE.MeshBasicMaterial( { color: 0x01f0 } );
+const sphere = new THREE.Mesh( geometryS, materialS );
+scene.add( sphere );
+
+const geometryP1 = new THREE.BoxGeometry(100, 100, 1 );
+const materialP1 = new THREE.MeshBasicMaterial( { color: 0xF54927 } );
+const pared1 = new THREE.Mesh( geometryP1, materialP1 );
+scene.add( pared1 );
+
+sphere.position.y = 1;
+
+pared1.position.y = 10;
+pared1.position.z = -10;
+
+camera.position.z = 10;
+camera.position.y = 3;
+
+function animate() {
+    renderer.render( scene, camera );
+
+}
+</script>
+  </body>
+</html>
