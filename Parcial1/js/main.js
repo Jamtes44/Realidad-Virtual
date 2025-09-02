@@ -27,7 +27,6 @@ const textureCube = loader.load( [
 scene.background = textureCube
 
 const manager = new THREE.LoadingManager();
-manager.onError = function(url) { console.error('Error loading:', url); };
 const loaderFBX = new FBXLoader( manager );
 
 ////////////////////////////////////////////luz
@@ -43,10 +42,18 @@ light3.position.set(2.9, 3.5 , -5);
 light3.castShadow = true;
 scene.add( light3 );
 
-const light4 = new THREE.PointLight( 0xfffaff, 0.3, 100 );
+const light4 = new THREE.PointLight( 0xfffaff, 0.4, 100 );
 light4.position.set( 0, 5, 5 );
 light4.castShadow = true;
 scene.add( light4 );
+
+const light5 = new THREE.PointLight( 0xFFA500, 1, 50 );
+light5.position.set( -6, 3, 3 );
+light5.castShadow = true;
+scene.add( light5 );
+
+const helper5 = new THREE.PointLightHelper( light5, 1 );
+scene.add( helper5 );
 
 ////////////////////////////////////////////geometrias
 
@@ -64,7 +71,7 @@ const clock = new THREE.Clock();
 loaderFBX.load('./modelos/HauntedHouse.fbx', function(object){
     object.traverse(function(child){
         if(child.isMesh){
-            child.material = new THREE.MeshPhongMaterial({ color: 0x808000 });
+            child.material = new THREE.MeshPhongMaterial({ color: 0x808080 });
             child.castShadow = true;
             child.receiveShadow = true;
         }
@@ -77,9 +84,12 @@ loaderFBX.load('./modelos/HauntedHouse.fbx', function(object){
 });
 
 loaderFBX.load('./modelos/11.fbx', function(object){
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('./textures/GhostWindowsColor.png');
+
     object.traverse(function(child){
         if(child.isMesh){
-            child.material = new THREE.MeshPhongMaterial({ color: 0x808080 });
+            child.material = new THREE.MeshPhongMaterial({ map: texture, shininess: 0 });
             child.castShadow = true;
             child.receiveShadow = true;
         }
@@ -88,6 +98,31 @@ loaderFBX.load('./modelos/11.fbx', function(object){
     object.scale.set(0.01, 0.01, 0.01);
     object.position.set(1, 0, 3);
     object.rotation.y = 90;
+
+    if (object.animations && object.animations.length > 0) {
+        mixer = new THREE.AnimationMixer( object );
+        const action = mixer.clipAction( object.animations[ 0 ] );
+        action.play();
+    }
+
+    scene.add(object);
+});
+
+loaderFBX.load('./modelos/Pumpkin.fbx', function(object){
+    const textureLoader = new THREE.TextureLoader();
+    const texture = textureLoader.load('./textures/PumpkinColor.png');
+
+    object.traverse(function(child){
+        if(child.isMesh){
+            child.material = new THREE.MeshPhongMaterial({ map: texture, shininess: 0 });
+            child.castShadow = true;
+            child.receiveShadow = true;
+        }
+    });
+
+    object.scale.set(0.035, 0.035, 0.035);
+    object.position.set(-6, -2, 3);
+    object.rotation.y=96;
 
     if (object.animations && object.animations.length > 0) {
         mixer = new THREE.AnimationMixer( object );
