@@ -9,68 +9,127 @@
   </head>
   <body>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r119/three.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.119.1/examples/js/controls/OrbitControls.js"></script>
     <script>
     const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({antialias: true});
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setAnimationLoop( animate );
 document.body.appendChild( renderer.domElement );
 
+const loader = new THREE.CubeTextureLoader();
+const textureCube = loader.load([
+  'Uv/px.png',
+  'Uv/nx.png',
+  'Uv/py.png',
+  'Uv/ny.png',
+  'Uv/pz.png',
+  'Uv/nz.png'
+]);
+scene.background = textureCube;
+
+
+const textureLoader = new THREE.TextureLoader();
+const textureSol = textureLoader.load('texturas/sol.jpg');
+const textureMercurio = textureLoader.load('texturas/mercurio.jpg');
+const textureVenus = textureLoader.load('texturas/venus.jpg');
+const textureTierra = textureLoader.load('texturas/tierra.jpg');
+const textureLuna = textureLoader.load('texturas/luna.jpg');
+const textureMarte = textureLoader.load('texturas/marte.jpg');
+const textureJupiter = textureLoader.load('texturas/jupiter.jpg');
+const textureSaturno = textureLoader.load('texturas/saturno.jpg');
+const textureUrano = textureLoader.load('texturas/urano.jpg');
+const textureNeptuno = textureLoader.load('texturas/neptuno.jpg');
+
+const ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.5);
+scene.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xFFFF00, 5, 1000);
+pointLight.position.set(0, 0, 0);
+pointLight.castShadow = true;
+scene.add(pointLight);
+
 const geometry = new THREE.SphereGeometry(3, 32, 32 );
-const material = new THREE.MeshBasicMaterial( { color: 0xFFED00 } );
+const material = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureSol } );
 const sphere = new THREE.Mesh( geometry, material );
+sphere.castShadow = true;
+sphere.receiveShadow = true;
 scene.add( sphere );
 
 const geometryM = new THREE.SphereGeometry(0.5, 32, 32 );
-const materialM = new THREE.MeshBasicMaterial( { color: 0xF7D777 } );
+const materialM = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureMercurio } );
 const sphereM = new THREE.Mesh( geometryM, materialM );
+sphereM.castShadow = true;
+sphereM.receiveShadow = true;
 scene.add( sphereM );
 
 const geometryV = new THREE.SphereGeometry(1, 32, 32 );
-const materialV = new THREE.MeshBasicMaterial( { color: 0xD97441 } );
+const materialV = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureVenus } );
 const sphereV = new THREE.Mesh( geometryV, materialV );
+sphereV.castShadow = true;
+sphereV.receiveShadow = true;
 scene.add( sphereV );
 
 
 const geometryT = new THREE.SphereGeometry(1, 32, 32 );
-const materialT = new THREE.MeshBasicMaterial( { color: 0x002EFF } );
+const materialT = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureTierra } );
 const sphereT = new THREE.Mesh( geometryT, materialT );
+sphereT.castShadow = true;
+sphereT.receiveShadow = true;
 scene.add( sphereT );
 
 const geometryL = new THREE.SphereGeometry(0.1, 32, 32 );
-const materialL = new THREE.MeshBasicMaterial( { color: 0xE8E9EB } );
+const materialL = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureLuna } );
 const sphereL = new THREE.Mesh( geometryL, materialL );
+sphereL.castShadow = true;
+sphereL.receiveShadow = true;
 scene.add( sphereL );
 
 const geometryMa = new THREE.SphereGeometry(1, 32, 32 );
-const materialMa = new THREE.MeshBasicMaterial( { color: 0xFF4545 } );
+const materialMa = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureMarte } );
 const sphereMa = new THREE.Mesh( geometryMa, materialMa );
+sphereMa.castShadow = true;
+sphereMa.receiveShadow = true;
 scene.add( sphereMa );
 
 const geometryJ = new THREE.SphereGeometry(2, 32, 32 );
-const materialJ = new THREE.MeshBasicMaterial( { color: 0x8C7B2E } );
+const materialJ = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureJupiter } );
 const sphereJ = new THREE.Mesh( geometryJ, materialJ );
+sphereJ.castShadow = true;
+sphereJ.receiveShadow = true;
 scene.add( sphereJ );
 
 const geometrySa = new THREE.SphereGeometry(2, 32, 32 );
-const materialSa = new THREE.MeshBasicMaterial( { color: 0xA69446 } );
+const materialSa = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureSaturno } );
 const sphereSa = new THREE.Mesh( geometrySa, materialSa );
+sphereSa.castShadow = true;
+sphereSa.receiveShadow = true;
 scene.add( sphereSa );
 
 const geometryU = new THREE.SphereGeometry(1, 32, 32 );
-const materialU = new THREE.MeshBasicMaterial( { color: 0x5DA2D4 } );
+const materialU = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureUrano } );
 const sphereU = new THREE.Mesh( geometryU, materialU );
+sphereU.castShadow = true;
+sphereU.receiveShadow = true;
 scene.add( sphereU );
 
 
 const geometryN = new THREE.SphereGeometry(1, 32, 32 );
-const materialN = new THREE.MeshBasicMaterial( { color: 0x2EA0F2 } );
+const materialN = new THREE.MeshPhongMaterial( { envMap: textureCube, map: textureNeptuno } );
 const sphereN = new THREE.Mesh( geometryN, materialN );
+sphereN.castShadow = true;
+sphereN.receiveShadow = true;
 scene.add( sphereN );
 
 camera.position.z = 70;
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
 
 let M = 5;
 let V = 10; 
@@ -90,39 +149,76 @@ let tSa = 0;
 let tU = 0;
 let tN = 0;
 
+
+let rotSun = 0;
+let rotM = 0;
+let rotV = 0;
+let rotT = 0;
+let rotL = 0;
+let rotMa = 0;
+let rotJ = 0;
+let rotSa = 0;
+let rotU = 0;
+let rotN = 0;
+
 function animate() {
     t += 0.01;
     tM += 0.015;
     tV += 0.016;
     tMa += 0.012;
-    
+    tJ += 0.008;
+    tSa += 0.007;
+    tU += 0.006;
+    tN += 0.005;
+
+    rotSun += 0.005;
+    rotM += 0.02;
+    rotV += 0.018;
+    rotT += 0.015;
+    rotL += 0.03;
+    rotMa += 0.013;
+    rotJ += 0.01;
+    rotSa += 0.009;
+    rotU += 0.008;
+    rotN += 0.007;
+
     sphereM.position.x = M * Math.cos(tM);
     sphereM.position.y = M * Math.sin(tM);
+    sphereM.rotation.y = rotM;
 
     sphereV.position.x = V * Math.cos(tV);
     sphereV.position.y = V * Math.sin(tV);
+    sphereV.rotation.y = rotV;
 
     sphereT.position.x = R * Math.cos(t);
-    sphereT.position.y = R * Math.sin(t);  
+    sphereT.position.y = R * Math.sin(t);
+    sphereT.rotation.y = rotT;
 
     sphereL.position.x = sphereT.position.x + R2 * Math.cos(t*2);
     sphereL.position.y = sphereT.position.y + R2 * Math.sin(t*2);
+    sphereL.rotation.y = rotL;
 
     sphereMa.position.x = Ma * Math.cos(tMa);
     sphereMa.position.y = Ma * Math.sin(tMa);
+    sphereMa.rotation.y = rotMa;
 
-    sphereJ.position.x = J * Math.cos(t);
-    sphereJ.position.y = J * Math.sin(t);
+    sphereJ.position.x = J * Math.cos(tJ);
+    sphereJ.position.y = J * Math.sin(tJ);
+    sphereJ.rotation.y = rotJ;
 
-    sphereSa.position.x = Sa * Math.cos(t);
-    sphereSa.position.y = Sa * Math.sin(t);
+    sphereSa.position.x = Sa * Math.cos(tSa);
+    sphereSa.position.y = Sa * Math.sin(tSa);
+    sphereSa.rotation.y = rotSa;
 
-    sphereU.position.x = U * Math.cos(t);
-    sphereU.position.y = U * Math.sin(t);
+    sphereU.position.x = U * Math.cos(tU);
+    sphereU.position.y = U * Math.sin(tU);
+    sphereU.rotation.y = rotU;
 
-    sphereN.position.x = N * Math.cos(t);
-    sphereN.position.y = N * Math.sin(t);
- 
+    sphereN.position.x = N * Math.cos(tN);
+    sphereN.position.y = N * Math.sin(tN);
+    sphereN.rotation.y = rotN;
+
+    sphere.rotation.y = rotSun;
 
   renderer.render( scene, camera );
 
